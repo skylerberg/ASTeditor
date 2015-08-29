@@ -9,11 +9,12 @@ from ASTeditor import tui
 from ASTeditor.keymap import KEYMAP
 
 def is_excluded(node):
-    excluded = set([_ast.Load, _ast.Param, _ast.Store, _ast.Name, _ast.Num, _ast.alias, _ast.Call, _ast.arguments, _ast.List, _ast.ListComp, _ast.Dict, _ast.DictComp])
-    for type_ in excluded:
+    excluded = set([_ast.Load, _ast.Param, _ast.Store, _ast.Name, _ast.Num, _ast.alias, _ast.Call, _ast.arguments, _ast.List, _ast.ListComp, _ast.Dict, _ast.DictComp, _ast.Compare, _ast.Expr, _ast.Mod, _ast.Add])
+    whitelist = set([_ast.If, _ast.FunctionDef, _ast.ClassDef, _ast.While, _ast.With, _ast.For, _ast.Module])
+    for type_ in whitelist:
         if isinstance(node, type_):
-            return True
-    return False
+            return False
+    return True
 
 def child_list(node):
     result = []

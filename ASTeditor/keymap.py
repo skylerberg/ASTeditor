@@ -11,5 +11,9 @@ KEYMAP = {
     'l': commands.next_child,
     's': commands.save,
     'd': commands.delete_node,
+    'm': commands.build_import,
+    'i': commands.build_if,
+    'e': commands.build_expr,
+    '4': commands.build_for,
     'q': exit,
 }

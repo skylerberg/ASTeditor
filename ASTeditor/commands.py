@@ -45,6 +45,36 @@ def build_continue():
 def build_break():
     add_ast_node(_ast.Break())
 
+def build_import():
+    module = menu('module')['module']
+    add_ast_node(_ast.Import(names=[_ast.alias(name=module, asname=None)]))
+
+def build_if():
+    test = menu('test')['test']
+    test = ast.parse(test).body[0].value
+    add_ast_node(_ast.If(
+        test=test,
+        body=[],
+        orelse=[],
+    ))
+
+def build_for():
+    config = menu("target", "iterable")
+    target = _ast.Name(id=config["target"])
+    iterable = ast.parse(config["iterable"]).body[0].value
+    add_ast_node(_ast.For(
+        target=target,
+        iter=iterable,
+        body=[],
+        orelse=[],
+    ))
+
+
+def build_expr():
+    expression = menu('expression')['expression']
+    expression = ast.parse(expression).body[0]
+    add_ast_node(expression)
+
 def delete_node():
     current = globals["node"]
     parent = current.parent
@@ -55,7 +85,6 @@ def delete_node():
         setattr(parent.node, field, filtered)
     parent.build_children()
     globals["node"] = parent
-
 
 
 def save():
