@@ -18,7 +18,7 @@ def menu(*args):
     curses.noecho()
     return results
 
-def display():
+def _display():
     screen = SCREEN
     node = globals['node']
     screen.erase()
@@ -39,5 +39,7 @@ def _event_loop(screen):
     SCREEN = screen
     curses.noecho()
     while True:
-        display()
-        KEYMAP[screen.getkey()]()
+        _display()
+        key = screen.getkey()
+        if key in KEYMAP:
+            KEYMAP[key]()
